@@ -12,7 +12,7 @@ RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \&& echo 'Asia/Shan
 VOLUME /tmp
 
 # 复制jar到镜像
-COPY target/sentinel-dashboard.jar app.jar /app.jar
+COPY target/sentinel-dashboard.jar /app.jar
 
 #ENTRYPOINT ["java","-jar","/app.jar"]
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app.jar"]

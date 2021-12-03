@@ -27,8 +27,10 @@ import com.alibaba.nacos.api.config.ConfigFactory;
 import com.alibaba.nacos.api.config.ConfigService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
 import java.util.List;
 import java.util.Optional;
@@ -101,10 +103,12 @@ public class NacosConfig {
         return s -> JSON.parseArray(s, ApiDefinitionEntity.class);
     }
 
+    @Autowired
+    private Environment env;
     @Bean
     public ConfigService nacosConfigService() throws Exception {
-        String namespace = System.getProperty("nacos.namespace");
-        String serverAddr = Optional.ofNullable(System.getProperty("nacos.serverAddr")).orElse("localhost:8848");
+        String namespace = env.getProperty("nacos.namespace");
+        String serverAddr = Optional.ofNullable(env.getProperty("nacos.serverAddr")).orElse("localhost:8848");
 
         logger.info("nacos.namespace={}", namespace);
         logger.info("nacos.serverAddr={}", serverAddr);
