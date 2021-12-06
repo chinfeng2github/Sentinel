@@ -317,6 +317,7 @@ public class SentinelApiClient {
                     if (isSuccess(statusCode)) {
                         future.complete(value);
                     } else {
+                        logger.warn("Not isSuccessL {}", request.getURI().toString());
                         if (isCommandNotFound(statusCode, value)) {
                             future.completeExceptionally(new CommandNotFoundException(request.getURI().getPath()));
                         } else {
